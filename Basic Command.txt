@@ -1,0 +1,28 @@
+if (command === "command name") {
+
+    //Do stuff here
+    // for example a embed
+}
+
+
+if you want a embed:
+
+if (command === "giveembed") {
+//define the embed
+    let embed = new Discord.RichEmbed()
+    //Set title
+    .setTitle("title")
+    //Set description
+    .setDescription("description")
+    //add a field
+    .addField("Darker text", "lighter text")
+    //set footer
+    .setFooter("Dark text")
+    //Set time stamp
+    .setTimestamp()
+    //to add more fields just add another
+     .addField
+     under this part
+    //add a field
+    //.addField("Darker text", "lighter text")
+}
