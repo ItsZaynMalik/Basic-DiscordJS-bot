@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
-const client = new Discord.Client();
+const client = new Discord.Client({
+  intents: [Guilds,GuildMessages,GuildMembers,MessageContent]
+});
 let config = require("config.json")
 
 
@@ -27,14 +29,33 @@ client.on("message", async message => {
     m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
   }
   if(command === "help") {
-    let helpembed = new Discord.RichEmbed()
+    let helpembed = new Discord.EmbedBuilder()
     .setTitle("HelpMenu")
     .setDescription("This are all command")
-    .addField("say", "Says the command")
-    .addField("kick", "Kicks a user")
-    .addField("ban", "Bans a user")
-    .addField("purge", "Purges a ammount of messages")
-    .addField("ping", "Checks API Latency")
+    .addFields([
+      {
+        name: "Say",
+        value: "Says the command"
+      },
+       {
+        name: "Kick",
+        value: "Kicks a user"
+      },
+       {
+        name: "Bans",
+        value: "Bans a user"
+      },
+      {
+        name: "Purge",
+        value: "Purges a ammount of messages"
+      },
+       {
+        name: "Ping",
+        value: "Checks API Latency"
+      }
+                ])
+
+    message.reply({ embeds: [helpembed] })
   }
   
   
@@ -45,7 +66,7 @@ client.on("message", async message => {
   }
   
   if(command === "kick") {
-    if(!message.author.hasPermission("KICK_MEMBERS")) return message.reply("Sorry, you don't have permissions to use this!");
+    if(!message.author.permissions.has("KickMembers")) return message.reply("Sorry, you don't have permissions to use this!");
     let member = message.mentions.members.first() || message.guild.members.get(args[0]);
     if(!member)
       return message.reply("Please mention a valid member of this server");
@@ -60,7 +81,7 @@ client.on("message", async message => {
   }
   
   if(command === "ban") {
-    if(!message.author.hasPermission("BAN_MEMBERS")) return message.reply("Sorry, you don't have permissions to use this!");
+    if(!message.author.permissions.has("BanMembers")) return message.reply("Sorry, you don't have permissions to use this!");
     let member = message.mentions.members.first();
     if(!member)
       return message.reply("Please mention a valid member of this server");
